@@ -155,7 +155,7 @@ class SO2Matrix(_base.SOMatrixBase):
         """
         phi = np.atleast_1d(phi)
 
-        Phi = np.zeros([len(phi), cls.dim, cls.dim])
+        Phi = np.zeros([len(phi), cls.dim, cls.dim], dtype=np.complex)
         Phi[:, 0, 1] = -phi
         Phi[:, 1, 0] = phi
         return np.squeeze(Phi)

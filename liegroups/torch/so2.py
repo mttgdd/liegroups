@@ -23,7 +23,7 @@ class SO2Matrix(_base.SOMatrixBase):
         s = phi.sin()
         c = phi.cos()
 
-        mat = phi.__class__(phi.shape[0], cls.dim, cls.dim)
+        mat = torch.zeros((phi.shape[0], cls.dim, cls.dim), dtype=phi.dtype)
         mat[:, 0, 0] = c
         mat[:, 0, 1] = -s
         mat[:, 1, 0] = s
@@ -42,7 +42,7 @@ class SO2Matrix(_base.SOMatrixBase):
         if phi.dim() < 1:
             phi = phi.unsqueeze(dim=0)
 
-        jac = phi.__class__(phi.shape[0], cls.dim, cls.dim).to(phi.device)
+        jac = torch.zeros((phi.shape[0], cls.dim, cls.dim), dtype=phi.dtype).to(phi.device)
 
         # Near phi==0, use first order Taylor expansion
         small_angle_mask = utils.isclose(phi, 0.)
@@ -82,7 +82,7 @@ class SO2Matrix(_base.SOMatrixBase):
         if phi.dim() < 1:
             phi = phi.unsqueeze(dim=0)
 
-        jac = phi.__class__(phi.shape[0], cls.dim, cls.dim).to(phi.device)
+        jac = torch.zeros((phi.shape[0], cls.dim, cls.dim), dtype=phi.dtype).to(phi.device)
 
         # Near phi==0, use first order Taylor expansion
         small_angle_mask = utils.isclose(phi, 0.)
@@ -123,7 +123,7 @@ class SO2Matrix(_base.SOMatrixBase):
         s = mat[:, 1, 0]
         c = mat[:, 0, 0]
 
-        return torch.atan2(s, c).squeeze_()
+        return torch.atan(s/c).squeeze_()
 
     def to_angle(self):
         """Recover the rotation angle in rad from the rotation matrix."""

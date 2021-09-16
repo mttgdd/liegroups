@@ -14,7 +14,7 @@ def isclose(mat1, mat2, tol=1e-6):
 
     Either tensor can be replaced by a scalar.
     """
-    return (mat1 - mat2).abs_().lt(tol)
+    return torch.abs(mat1 - mat2).lt(tol)
 
 
 def outer(vecs1, vecs2):
